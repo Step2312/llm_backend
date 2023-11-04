@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import timedelta
@@ -11,6 +12,16 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
 jwt = JWTManager(app)
 
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # pass through HTTP errors
+    if isinstance(e, HTTPException):
+        return e
+    return jsonify(error="Internal Server Error"), 500
 
 @app.route('/')
 def index():
@@ -39,11 +50,11 @@ def wd():
 @app.route('/zx', methods=['POST'])
 @jwt_required()
 def kyzx():
-    name = request.args.get('name', None)
-    gender = request.args.get('gender', None)
-    age = request.args.get('age', None)
-    disease = request.args.get('disease', None)
-    question = request.args.get('question', None)
+    name = request.json.get('name', None)
+    gender = request.json.get('gender', None)
+    age = request.json.get('age', None)
+    disease = request.json.get('disease', None)
+    question = request.json.get('question', None)
     return jsonify({
     "tzpd": {
         "zytz": {
