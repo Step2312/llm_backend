@@ -23,9 +23,9 @@ pip install gunicorn
 
 1. 本地运行
 
-```bash
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
+   ```bash
+   gunicorn -w 4 -b 0.0.0.0:5000 app:app
+   ```
 
 2. 获取数据示例(test.ipynb)
 
