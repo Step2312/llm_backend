@@ -11,7 +11,7 @@
 
 这是一个大模型后台，用于生成中医健康养生建议数据。
 
-## 安装库<a name = "installation"></a>
+## 🚀 安装库<a name = "installation"></a>
 
 ```
 pip install flask
